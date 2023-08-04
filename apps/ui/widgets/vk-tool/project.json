@@ -1,0 +1,128 @@
+{
+  "name": "mfe-vk-tool",
+  "$schema": "../../../../node_modules/nx/schemas/project-schema.json",
+  "projectType": "application",
+  "prefix": "av-tarifierung",
+  "sourceRoot": "apps/ui/widgets/vk-tool/src",
+  "tags": [],
+  "targets": {
+    "build": {
+      "executor": "@nx/angular:webpack-browser",
+      "outputs": [
+        "{options.outputPath}"
+      ],
+      "options": {
+        "outputPath": "dist/apps/ui/widgets/vk-tool",
+        "index": "apps/ui/widgets/vk-tool/src/index.html",
+        "main": "apps/ui/widgets/vk-tool/src/main.ts",
+        "polyfills": [
+          "zone.js"
+        ],
+        "tsConfig": "apps/ui/widgets/vk-tool/tsconfig.app.json",
+        "assets": [
+          "apps/ui/widgets/vk-tool/src/favicon.ico",
+          "apps/ui/widgets/vk-tool/src/assets",
+          {
+            "glob": "package.json",
+            "input": "apps/ui/widgets/vk-tool/",
+            "output": ""
+          }
+        ],
+        "styles": [
+          "apps/ui/widgets/vk-tool/src/styles.scss"
+        ],
+        "scripts": [],
+        "customWebpackConfig": {
+          "path": "apps/ui/widgets/vk-tool/webpack.config.js"
+        },
+        "commonChunk": false
+      },
+      "configurations": {
+        "production": {
+          "budgets": [
+            {
+              "type": "initial",
+              "maximumWarning": "500kb",
+              "maximumError": "1mb"
+            },
+            {
+              "type": "anyComponentStyle",
+              "maximumWarning": "2kb",
+              "maximumError": "4kb"
+            }
+          ],
+          "outputHashing": "none",
+          "customWebpackConfig": {
+            "path": "apps/ui/widgets/vk-tool/webpack.prod.config.js"
+          }
+        },
+        "development": {
+          "buildOptimizer": false,
+          "optimization": false,
+          "vendorChunk": true,
+          "extractLicenses": false,
+          "sourceMap": true,
+          "namedChunks": true
+        }
+      },
+      "defaultConfiguration": "production"
+    },
+    "serve": {
+      "executor": "@nx/angular:webpack-dev-server",
+      "configurations": {
+        "production": {
+          "browserTarget": "mfe-vk-tool:build:production"
+        },
+        "development": {
+          "browserTarget": "mfe-vk-tool:build:development"
+        }
+      },
+      "defaultConfiguration": "development",
+      "options": {
+        "port": 4202,
+        "publicHost": "http://localhost:4202"
+      }
+    },
+    "extract-i18n": {
+      "executor": "ngx-build-plus:extract-i18n",
+      "options": {
+        "browserTarget": "mfe-vk-tool:build",
+        "extraWebpackConfig": "apps/ui/widgets/vk-tool/webpack.config.js"
+      }
+    },
+    "lint": {
+      "executor": "@nx/linter:eslint",
+      "outputs": [
+        "{options.outputFile}"
+      ],
+      "options": {
+        "lintFilePatterns": [
+          "apps/ui/widgets/vk-tool/**/*.ts",
+          "apps/ui/widgets/vk-tool/**/*.html"
+        ]
+      }
+    },
+    "test": {
+      "executor": "@nx/jest:jest",
+      "outputs": [
+        "{workspaceRoot}/coverage/{projectRoot}"
+      ],
+      "options": {
+        "jestConfig": "apps/ui/widgets/vk-tool/jest.config.ts",
+        "passWithNoTests": true
+      },
+      "configurations": {
+        "ci": {
+          "ci": true,
+          "codeCoverage": true
+        }
+      }
+    },
+    "serve-static": {
+      "executor": "@nx/web:file-server",
+      "options": {
+        "buildTarget": "mfe-vk-tool:build"
+      }
+    }
+  }
+}

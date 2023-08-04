@@ -1,0 +1,33 @@
+{
+  "name": "mfe-vk-tool-e2e",
+  "$schema": "../../../../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "src",
+  "projectType": "application",
+  "targets": {
+    "e2e": {
+      "executor": "@nx/cypress:cypress",
+      "options": {
+        "cypressConfig": "apps/ui/widgets/vk-tool-e2e/cypress.config.ts",
+        "devServerTarget": "mfe-vk-tool:serve:development",
+        "testingType": "e2e"
+      },
+      "configurations": {
+        "production": {
+          "devServerTarget": "mfe-vk-tool:serve:production"
+        },
+        "ci": {
+          "devServerTarget": "mfe-vk-tool:serve-static"
+        }
+      }
+    },
+    "lint": {
+      "executor": "@nx/linter:eslint",
+      "outputs": ["{options.outputFile}"],
+      "options": {
+        "lintFilePatterns": ["apps/ui/widgets/vk-tool-e2e/**/*.{js,ts}"]
+      }
+    }
+  },
+  "tags": [],
+  "implicitDependencies": ["mfe-vk-tool"]
+}

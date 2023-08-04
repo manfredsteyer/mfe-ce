@@ -1,0 +1,128 @@
+{
+  "name": "av-offer",
+  "$schema": "../../../../node_modules/nx/schemas/project-schema.json",
+  "projectType": "application",
+  "prefix": "av-tarifierung",
+  "sourceRoot": "apps/ui/widgets/av-offer/src",
+  "tags": [],
+  "targets": {
+    "build": {
+      "executor": "@nx/angular:webpack-browser",
+      "outputs": [
+        "{options.outputPath}"
+      ],
+      "options": {
+        "outputPath": "dist/apps/ui/widgets/av-offer",
+        "index": "apps/ui/widgets/av-offer/src/index.html",
+        "main": "apps/ui/widgets/av-offer/src/main.ts",
+        "polyfills": [
+          "zone.js"
+        ],
+        "tsConfig": "apps/ui/widgets/av-offer/tsconfig.app.json",
+        "assets": [
+          "apps/ui/widgets/av-offer/src/favicon.ico",
+          "apps/ui/widgets/av-offer/src/assets",
+          {
+            "glob": "package.json",
+            "input": "apps/ui/widgets/av-offer/",
+            "output": ""
+          }
+        ],
+        "styles": [
+          "apps/ui/widgets/av-offer/src/styles.scss"
+        ],
+        "scripts": [],
+        "customWebpackConfig": {
+          "path": "apps/ui/widgets/av-offer/webpack.config.js"
+        },
+        "commonChunk": false
+      },
+      "configurations": {
+        "production": {
+          "budgets": [
+            {
+              "type": "initial",
+              "maximumWarning": "500kb",
+              "maximumError": "1mb"
+            },
+            {
+              "type": "anyComponentStyle",
+              "maximumWarning": "2kb",
+              "maximumError": "4kb"
+            }
+          ],
+          "outputHashing": "none",
+          "customWebpackConfig": {
+            "path": "apps/ui/widgets/av-offer/webpack.prod.config.js"
+          }
+        },
+        "development": {
+          "buildOptimizer": false,
+          "optimization": false,
+          "vendorChunk": true,
+          "extractLicenses": false,
+          "sourceMap": true,
+          "namedChunks": true
+        }
+      },
+      "defaultConfiguration": "production"
+    },
+    "serve": {
+      "executor": "@nx/angular:webpack-dev-server",
+      "configurations": {
+        "production": {
+          "browserTarget": "av-offer:build:production"
+        },
+        "development": {
+          "browserTarget": "av-offer:build:development"
+        }
+      },
+      "defaultConfiguration": "development",
+      "options": {
+        "port": 4200,
+        "publicHost": "http://localhost:4200"
+      }
+    },
+    "extract-i18n": {
+      "executor": "ngx-build-plus:extract-i18n",
+      "options": {
+        "browserTarget": "av-offer:build",
+        "extraWebpackConfig": "apps/ui/widgets/av-offer/webpack.config.js"
+      }
+    },
+    "lint": {
+      "executor": "@nx/linter:eslint",
+      "outputs": [
+        "{options.outputFile}"
+      ],
+      "options": {
+        "lintFilePatterns": [
+          "apps/ui/widgets/av-offer/**/*.ts",
+          "apps/ui/widgets/av-offer/**/*.html"
+        ]
+      }
+    },
+    "test": {
+      "executor": "@nx/jest:jest",
+      "outputs": [
+        "{workspaceRoot}/coverage/{projectRoot}"
+      ],
+      "options": {
+        "jestConfig": "apps/ui/widgets/av-offer/jest.config.ts",
+        "passWithNoTests": true
+      },
+      "configurations": {
+        "ci": {
+          "ci": true,
+          "codeCoverage": true
+        }
+      }
+    },
+    "serve-static": {
+      "executor": "@nx/web:file-server",
+      "options": {
+        "buildTarget": "av-offer:build"
+      }
+    }
+  }
+}
